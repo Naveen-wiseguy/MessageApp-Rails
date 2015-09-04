@@ -1,0 +1,13 @@
+<% provide :title,"Login" %>
+<h1>Enter your credentials</h1>
+<%= form_tag auth_path, method: 'post' do%>
+  <%= label_tag :user_name, "Username:" %>
+  <%= text_field_tag :user_name %>
+  <br/>
+  <%= label_tag :password , "Password :" %>
+  <%= password_field_tag :password %>
+  <br/>
+
+  <%= submit_tag "Login" %>
+<% end %>
+<%= link_to "New user ?", new_user_path %>

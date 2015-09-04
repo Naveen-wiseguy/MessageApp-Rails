@@ -13,3 +13,40 @@
  *= require_tree .
  *= require_self
  */
+
+ body{
+ 	margin: 5%;
+ 	background-color: #727213;
+ }
+
+ #sentmessages,#receivedmessages{
+ 	background-color: #888823;
+ 	padding: 2%;
+ 	margin-bottom: 10%;
+ }
+
+.form{
+	position: fixed;
+	bottom: 0;
+	background-color: #098866;
+	width: 88%;
+	padding: 1%;
+}
+
+.from, .to{
+	font-size: 75%;
+	color: #C1C1C1;
+}
+
+.time{
+	font-size: 70%;
+	color: #720904;
+}
+
+#sentmessages .from {
+	display: none;
+}
+
+#receivedmessages .to {
+	display: none;
+}

@@ -1,6 +1,14 @@
 Rails.application.routes.draw do
 
+    root 'users#home'
+    get 'users/login' => 'users#login', as: :login
+    post 'users/login' => 'users#auth', as: :auth
+    post 'users/send' => 'users#sendmsg', as: :send
+    post 'users/logout' => 'users#logout', as: :logout
+    get 'users/received' => 'users#refreshmsg', as: :received
+    get 'users/sent' => 'users#refreshsent', as: :sent
     resources :users ,only: [:create,:new,:show,:destroy]
+    
   # The priority is based upon order of creation: first created -> highest priority.
   # See how all your routes lay out with "rake routes".
 

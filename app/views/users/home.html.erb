@@ -1,0 +1,78 @@
+<% provide(:title,"Home") %>
+<h1>Home page </h1>
+
+Welcome user <%= @user.name %>
+
+<br/>
+Your messages :
+<%= link_to "Received","#",onclick: "switchTo(1)" %>
+<%= link_to "Sent", "#",onclick: "switchTo(2)" %>
+<div id="receivedmessages" >
+
+<%= render @user.received_messages %>
+
+</div>
+
+<div id="sentmessages" style="display:none;">
+<%= render @user.sent_messages %>
+</div>
+<div class="form" >
+<%= form_tag send_path,remote: true do %>
+	<%= label_tag "To :"%>
+	<%= select("user", "id", User.all.collect {|p| [ p.name, p.id ] }, {include_blank: 'None'}) %>
+	<br/>
+	<%= label_tag "Message" %>
+	<%= text_area_tag :body %>
+	<br/>
+	<%= submit_tag "Send" %>
+<% end %>
+</div>
+<%= javascript_tag do %>
+	function refresh()
+	{
+		$.ajax({
+	  url: '<%= received_path %>',
+	  type: 'GET',
+	  success: function(data) {
+		//called when successful
+		$("#receivedmessages").html(data);
+	  },
+	  error: function(e) {
+		//called when there is an error
+		//console.log(e.message);
+		alert("Error :"+e.message);
+  		}
+	});
+	$.ajax({
+		  url: '<%= sent_path %>',
+		  type: 'GET',
+		  success: function(data) {
+			//called when successful
+			$('#sentmessages').html(data);
+		  },
+		  error: function(e) {
+			//called when there is an error
+			//console.log(e.message);
+			alert("Error "+e.message);
+		  }
+		});
+	}
+
+	function switchTo(option)
+	{
+		if(option==1)//Display the received messages
+		{
+			$("#sentmessages").hide();
+			$("#receivedmessages").show();
+		}
+		else //Display sent messages
+		{
+			$("#receivedmessages").hide();
+			$("#sentmessages").show();
+		}
+
+	}
+
+	setInterval(refresh,7000);
+
+<% end %>
